@@ -1,6 +1,3 @@
-/**
- * Sample Skeleton for 'login.fxml' Controller Class
- */
 
 package fr.theo.control;
 
@@ -29,12 +26,9 @@ public class LoginController {
   @FXML private TextField usernameTextField; 
 
   @FXML void onConnectButton(ActionEvent event) {
-
   }
 
-  @FXML void onExitButton(ActionEvent event) {
-
-  }
+  @FXML void onExitButton(ActionEvent event) {System.exit(0);}
 
   // This method is called by the FXMLLoader when initialization is complete
   @FXML void initialize() {
@@ -44,7 +38,5 @@ public class LoginController {
     assert ipTextField != null : "fx:id=\"ipTextField\" was not injected: check your FXML file 'login.fxml'.";
     assert passwordTextField != null : "fx:id=\"passwordTextField\" was not injected: check your FXML file 'login.fxml'.";
     assert usernameTextField != null : "fx:id=\"usernameTextField\" was not injected: check your FXML file 'login.fxml'.";
-
   }
-
 }
