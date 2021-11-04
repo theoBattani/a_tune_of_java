@@ -1,6 +1,3 @@
-
-USE a_tune_of_java_db;
-
 CREATE TABLE civility(
    id_civility INT,
    title VARCHAR(8) ,
@@ -35,15 +32,21 @@ CREATE TABLE piece(
 );
 
 CREATE TABLE frequency(
-   id INT,
-   denomination VARCHAR(255)  NOT NULL,
-   PRIMARY KEY(id)
+   id_frequency INT,
+   label VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(id_frequency)
 );
 
 CREATE TABLE speciality(
    id_speciality INT,
    denomination VARCHAR(255)  NOT NULL,
    PRIMARY KEY(id_speciality)
+);
+
+CREATE TABLE responsibility(
+   id_responsibility INT,
+   label VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(id_responsibility)
 );
 
 CREATE TABLE city(
@@ -54,22 +57,23 @@ CREATE TABLE city(
    FOREIGN KEY(id_country) REFERENCES country(id_country)
 );
 
+CREATE TABLE meeting(
+   id_meeting INT,
+   label VARCHAR(255)  NOT NULL,
+   expected_visitors VARCHAR(50) ,
+   id_frequency INT NOT NULL,
+   PRIMARY KEY(id_meeting),
+   FOREIGN KEY(id_frequency) REFERENCES frequency(id_frequency)
+);
+
 CREATE TABLE address(
    id_address INT,
    number INT NOT NULL,
    track VARCHAR(255)  NOT NULL,
+   label VARCHAR(255) ,
    id_city INT NOT NULL,
    PRIMARY KEY(id_address),
    FOREIGN KEY(id_city) REFERENCES city(id_city)
-);
-
-CREATE TABLE place(
-   id_place INT,
-   denomination VARCHAR(255)  NOT NULL,
-   id_address INT,
-   PRIMARY KEY(id_place),
-   UNIQUE(id_address),
-   FOREIGN KEY(id_address) REFERENCES address(id_address)
 );
 
 CREATE TABLE person(
@@ -113,28 +117,6 @@ CREATE TABLE musician(
    FOREIGN KEY(id_person) REFERENCES person(id_person)
 );
 
-CREATE TABLE meeting(
-   id_meeting INT,
-   denomination VARCHAR(255)  NOT NULL,
-   expected_visitors VARCHAR(50) ,
-   id_place INT NOT NULL,
-   id INT NOT NULL,
-   PRIMARY KEY(id_meeting),
-   UNIQUE(id_place),
-   FOREIGN KEY(id_place) REFERENCES place(id_place),
-   FOREIGN KEY(id) REFERENCES frequency(id)
-);
-
-CREATE TABLE period(
-   id INT,
-   begin_date DATE NOT NULL,
-   end_date DATE NOT NULL,
-   id_meeting INT NOT NULL,
-   PRIMARY KEY(id),
-   UNIQUE(id_meeting),
-   FOREIGN KEY(id_meeting) REFERENCES meeting(id_meeting)
-);
-
 CREATE TABLE performance(
    id_performance VARCHAR(50) ,
    performance_date DATE NOT NULL,
@@ -147,10 +129,11 @@ CREATE TABLE performance(
 
 CREATE TABLE member_of_band(
    id_band INT,
+   id_responsibility INT,
    id_musician INT,
-   responsibility VARCHAR(255) ,
-   PRIMARY KEY(id_band, id_musician),
+   PRIMARY KEY(id_band, id_responsibility, id_musician),
    FOREIGN KEY(id_band) REFERENCES band(id_band),
+   FOREIGN KEY(id_responsibility) REFERENCES responsibility(id_responsibility),
    FOREIGN KEY(id_musician) REFERENCES musician(id_musician)
 );
 
@@ -192,4 +175,14 @@ CREATE TABLE play_piece(
    PRIMARY KEY(id_piece, id_performance),
    FOREIGN KEY(id_piece) REFERENCES piece(id_piece),
    FOREIGN KEY(id_performance) REFERENCES performance(id_performance)
+);
+
+CREATE TABLE take_place(
+   id_address INT,
+   id_meeting INT,
+   begin_date DATE,
+   end_date DATE,
+   PRIMARY KEY(id_address, id_meeting),
+   FOREIGN KEY(id_address) REFERENCES address(id_address),
+   FOREIGN KEY(id_meeting) REFERENCES meeting(id_meeting)
 );
