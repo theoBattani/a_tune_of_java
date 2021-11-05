@@ -1,6 +1,36 @@
 
-LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/persons.csv'
-INTO TABLE person
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/countries.csv'
+INTO TABLE country
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/cities.csv'
+INTO TABLE city
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/families.csv'
+INTO TABLE family
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/categories.csv'
+INTO TABLE category
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/instruments.csv'
+INTO TABLE instrument
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/pieces.csv'
+INTO TABLE piece
 COLUMNS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;

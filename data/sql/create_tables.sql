@@ -1,19 +1,27 @@
 CREATE TABLE civility(
    id_civility INT,
-   title VARCHAR(8) ,
+   title VARCHAR(8),
    PRIMARY KEY(id_civility)
 );
 
 CREATE TABLE country(
    id_country INT,
-   denomination VARCHAR(255) ,
+   denomination VARCHAR(255),
    PRIMARY KEY(id_country)
+);
+
+CREATE TABLE family(
+   id_family INT,
+   label VARCHAR(255),
+   PRIMARY KEY(id_family)
 );
 
 CREATE TABLE category(
    id_category INT,
    denomination VARCHAR(255)  NOT NULL,
-   PRIMARY KEY(id_category)
+   id_family INT,
+   PRIMARY KEY(id_category),
+   FOREIGN KEY(id_family) REFERENCES family(id_family)
 );
 
 CREATE TABLE instrument(
@@ -32,19 +40,19 @@ CREATE TABLE piece(
 );
 
 CREATE TABLE frequency(
-   id_frequency INT,
+   id_frequency INT AUTO_INCREMENT,
    label VARCHAR(255)  NOT NULL,
    PRIMARY KEY(id_frequency)
 );
 
 CREATE TABLE speciality(
-   id_speciality INT,
+   id_speciality INT AUTO_INCREMENT,
    denomination VARCHAR(255)  NOT NULL,
    PRIMARY KEY(id_speciality)
 );
 
 CREATE TABLE responsibility(
-   id_responsibility INT,
+   id_responsibility INT AUTO_INCREMENT,
    label VARCHAR(255)  NOT NULL,
    PRIMARY KEY(id_responsibility)
 );
@@ -68,9 +76,9 @@ CREATE TABLE meeting(
 
 CREATE TABLE address(
    id_address INT,
-   number INT NOT NULL,
-   track VARCHAR(255)  NOT NULL,
-   label VARCHAR(255) ,
+   number INT,
+   track VARCHAR(255),
+   label VARCHAR(255),
    id_city INT NOT NULL,
    PRIMARY KEY(id_address),
    FOREIGN KEY(id_city) REFERENCES city(id_city)
