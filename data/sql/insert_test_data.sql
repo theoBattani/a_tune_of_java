@@ -11,6 +11,24 @@ COLUMNS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/addresses.csv'
+INTO TABLE address
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/persons.csv'
+INTO TABLE person
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/contacts.csv'
+INTO TABLE contact
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
 LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/families.csv'
 INTO TABLE family
 COLUMNS TERMINATED BY ','
