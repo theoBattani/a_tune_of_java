@@ -3,12 +3,21 @@ DELIMITER $
 
 CREATE PROCEDURE get_bands_playing_piece(IN p_id_piece INT)
 BEGIN
-  SELECT * FROM band
-  INNER JOIN directory ON id_band = band.id_band
+  SELECT band.denomination,  
+    FROM band
+  INNER JOIN play_piece 
+    ON play_piece.id_piece = piece.id_piece
+  INNER JOIN performance
+    ON performance.id_performance = play_piece.id_performance
+  INNER JOIN during 
+    ON during.id_performance = performance.id_performance
   WHERE id_piece = p_id_piece;
 END $
 
-CREATE PROCEDURE get_meetings_with_piece(IN p_id_piece INT) 
+CREATE PROCEDURE get_meetings_by_piece_and_band(
+  IN p_id_piece INT,
+  IN p_id_band INT
+) 
 BEGIN 
   SELECT meeting.label, band.denomination 
     FROM meeting
@@ -18,7 +27,8 @@ BEGIN
     ON band.id_band = performance.id_band
   INNER JOIN play_piece 
     ON play_piece.id_performance = performance.id_performance
-  WHERE play_piece.id_piece = p_id_piece;
+  WHERE play_piece.id_piece = p_id_piece
+    AND band.id_band = p_id_band;
 END $
 
 CREATE PROCEDURE get_musician_by_meeting_and_speciality(
