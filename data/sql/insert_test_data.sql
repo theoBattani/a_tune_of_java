@@ -94,6 +94,41 @@ COLUMNS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/directories.csv'
+-- LOAD DATA INFILE 'D:/GitHub/a_tune_of_java/data/test/directories.csv'
+INTO TABLE directory
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/meetings.csv'
+-- LOAD DATA INFILE 'D:/GitHub/a_tune_of_java/data/test/meetings.csv'
+INTO TABLE meeting
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/performances.csv'
+-- LOAD DATA INFILE 'D:/GitHub/a_tune_of_java/data/test/performances.csv'
+INTO TABLE performance
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/during.csv'
+-- LOAD DATA INFILE 'D:/GitHub/a_tune_of_java/data/test/during.csv'
+INTO TABLE during
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/play_piece.csv'
+-- LOAD DATA INFILE 'D:/GitHub/a_tune_of_java/data/test/play_piece.csv'
+INTO TABLE play_piece
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 

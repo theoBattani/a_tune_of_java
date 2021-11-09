@@ -125,10 +125,9 @@ CREATE TABLE musician(
 );
 
 CREATE TABLE performance(
-   id_performance VARCHAR(50) ,
+   id_performance INT NOT NULL AUTO_INCREMENT,
    performance_date DATE NOT NULL,
    begin_time TIME NOT NULL,
-   end_time TIME NOT NULL,
    id_band INT NOT NULL,
    PRIMARY KEY(id_performance),
    FOREIGN KEY(id_band) REFERENCES band(id_band)
@@ -170,7 +169,7 @@ CREATE TABLE directory(
 
 CREATE TABLE during(
    id_meeting INT,
-   id_performance VARCHAR(50) ,
+   id_performance INT,
    PRIMARY KEY(id_meeting, id_performance),
    FOREIGN KEY(id_meeting) REFERENCES meeting(id_meeting),
    FOREIGN KEY(id_performance) REFERENCES performance(id_performance)
@@ -178,13 +177,13 @@ CREATE TABLE during(
 
 CREATE TABLE play_piece(
    id_piece INT,
-   id_performance VARCHAR(50) ,
+   id_performance INT,
    PRIMARY KEY(id_piece, id_performance),
    FOREIGN KEY(id_piece) REFERENCES piece(id_piece),
    FOREIGN KEY(id_performance) REFERENCES performance(id_performance)
 );
 
-CREATE TABLE take_place(
+CREATE TABLE takes_place(
    id_address INT,
    id_meeting INT,
    begin_date DATE,

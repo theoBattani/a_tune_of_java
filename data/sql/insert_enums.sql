@@ -10,6 +10,7 @@ INSERT INTO frequency (label) VALUES ('weekly');
 INSERT INTO frequency (label) VALUES ('monthly');
 INSERT INTO frequency (label) VALUES ('yearly');
 
+INSERT INTO speciality (denomination) VALUES ('instruments');
 INSERT INTO speciality (denomination) VALUES ('soliste');
 INSERT INTO speciality (denomination) VALUES ('choriste');
 
