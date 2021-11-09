@@ -2,7 +2,7 @@
 INSERT INTO civility (id_civility, title) VALUES (1, 'Mr');
 INSERT INTO civility (id_civility, title) VALUES (2, 'Mme');
 INSERT INTO civility (id_civility, title) VALUES (3, 'Mlle');
-INSERT INTO civility (id_civility, title) VALUES (4, 'Ielle')
+INSERT INTO civility (id_civility, title) VALUES (4, 'Ielle');
 
 INSERT INTO frequency (label) VALUES ('once');
 INSERT INTO frequency (label) VALUES ('daily');

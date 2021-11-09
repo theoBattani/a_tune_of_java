@@ -112,7 +112,6 @@ CREATE TABLE band(
    denomination VARCHAR(255)  NOT NULL,
    id_person INT NOT NULL,
    PRIMARY KEY(id_band),
-   UNIQUE(id_person),
    FOREIGN KEY(id_person) REFERENCES person(id_person)
 );
 
