@@ -1,12 +1,13 @@
+
 package fr.theo.data.base;
+
+import fr.theo.util.sql.connection.MySQLConnectionWrapper;
+import fr.theo.data.table.Piece;
 
 import java.util.ArrayList;
 
-import java.sql.SQLException;
-import java.sql.CallableStatement;
-
-import fr.theo.data.table.Piece;
-import fr.theo.util.sql.connection.MySQLConnectionWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ATuneOfJavaDatabase {
 
@@ -16,22 +17,32 @@ public class ATuneOfJavaDatabase {
 
   private MySQLConnectionWrapper connection;
 
-  ATuneOfJavaDatabase() {
+  public ATuneOfJavaDatabase() {
     this.connection = new MySQLConnectionWrapper(HOST, PORT, DATABASE_NAME);
     this.connection.open("root", "");
   }
 
   public void closeConnection() {connection.close();}
 
-  public ArrayList<Piece> getAllPieces() {
-    try {
-      CallableStatement statement; 
-      statement = this.connection.getProcedure("get_all_pieces");
-
-    } catch (SQLException e) {
-      e.printStackTrace();
+  public ObservableList<Piece> getAllPieces() {
+    ArrayList<String> result = this.connection.callProcedure("get_all_pieces");
+    ObservableList<Piece> output = FXCollections.observableArrayList();
+    for (String str: result) {
+      String[] map = str.split(",", 0);
+      String title = "";
+      String author = "";
+      String duration = "";
+      for (String column: map) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "denomination": title = field[1]; break;
+          case "author": author = field[1]; break;
+          case "duration": duration = field[1]; break;
+        }
+      }
+      output.add(new Piece(title, author, duration));
     }
-    return null;
+    return output;
   }
   
 }

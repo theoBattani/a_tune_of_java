@@ -9,6 +9,18 @@ public class QueryBuilder {
   
   public String build() {return this.builder.toString();}
 
+  public QueryBuilder call(String procedure, String... parameters) {
+    this.builder.append(String.format("%s %s(", "CALL", procedure));
+    if (parameters.length > 0) {
+      for (String parameter: parameters)
+        this.builder.append(String.format("%s,", parameter));
+      this.builder.setLength(this.builder.length() - 1);
+    }
+    this.builder.append(");");
+    System.out.println(this.builder.toString());
+    return this;
+  }
+
   public QueryBuilder select() {
     this.builder.append("SELECT ");
     return this;

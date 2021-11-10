@@ -1,13 +1,13 @@
 
 package fr.theo.util.sql.connection;
 
+import fr.theo.util.sql.query.Keywords;
 import fr.theo.util.sql.query.QueryBuilder;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
@@ -36,12 +36,19 @@ public class MySQLConnectionWrapper {
     }
   }
 
-  public CallableStatement getProcedure(String procedure) throws SQLException {
-    CallableStatement statement 
-      = (CallableStatement) this.connection.prepareStatement(
-      String.format("CALL %s();", procedure)
-    );
-    return statement;
+  public ArrayList<String> callProcedure(String procedure, String... parameters) {
+    try {
+      return parseResultSet(
+        this.connection
+          .createStatement()
+          .executeQuery(
+            (new QueryBuilder()).call(procedure, parameters).build()
+          )
+      );
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   public int countRows(String table) {
@@ -143,6 +150,28 @@ public class MySQLConnectionWrapper {
         }
         output[index] += String.format("%s:%s", names[nbColumns-1], resultSet.getString(nbColumns));
         index++;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return output;
+  }
+
+  private ArrayList<String> parseResultSet(ResultSet pResultSet) {
+    ArrayList<String> output = null;
+    try {
+      output = new ArrayList<>();
+      ResultSetMetaData resultSetMetaData = pResultSet.getMetaData();
+      int columnCount = resultSetMetaData.getColumnCount();
+      String[] columnNames = new String[columnCount];
+      for (int index = 0; index < columnCount; index++)
+        columnNames[index] = resultSetMetaData.getColumnName(index+1);
+      while (pResultSet.next()) {
+        StringBuilder builder = new StringBuilder();
+        for (int columnIndex = 0; columnIndex < columnCount - 1; columnIndex++)
+          builder.append(String.format("%s:%s,", columnNames[columnIndex], pResultSet.getString(columnIndex+1)));
+        builder.append(String.format("%s:%s", columnNames[columnCount-1], pResultSet.getString(columnCount)));
+        output.add(builder.toString());
       }
     } catch (SQLException e) {
       e.printStackTrace();

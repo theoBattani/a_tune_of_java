@@ -1,13 +1,16 @@
 
 package fr.theo.control;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import fr.theo.util.fxml.Loader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class LoginController {
 
@@ -18,6 +21,7 @@ public class LoginController {
   @FXML private URL location;
 
   // Values injected by FXMLLoader
+  @FXML private Stage stage;
   @FXML private TextField databaseNameTextField;
   @FXML private TextField ipTextField;
   @FXML private Button connectButton;
@@ -26,9 +30,18 @@ public class LoginController {
   @FXML private TextField usernameTextField; 
 
   @FXML void onConnectButton(ActionEvent event) {
+    Stage viewStage;
+    try {
+      viewStage = Loader.loadFXML("view");
+      viewStage.show();
+      stage.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 
-  @FXML void onExitButton(ActionEvent event) {System.exit(0);}
+  @FXML void onExitButton(ActionEvent event) {stage.close();}
 
   // This method is called by the FXMLLoader when initialization is complete
   @FXML void initialize() {
