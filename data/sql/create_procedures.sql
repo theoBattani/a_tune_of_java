@@ -19,7 +19,7 @@ CREATE PROCEDURE get_bands_playing_piece(IN p_id_piece INT)
 BEGIN
   SELECT  
     band.denomination AS band_label,  
-    CONCAT_WS(' ', person.fristname, person.lastname) AS correspondent
+    CONCAT_WS(' ', person.firstname, person.lastname) AS correspondent
     FROM band
   INNER JOIN performance
     ON performance.id_band = performance.id_band

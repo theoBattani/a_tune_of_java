@@ -13,6 +13,6 @@ public class Piece {
   }
 
   public String getTitle() {return this.title;}
-  public String getAuhtor() {return this.author;}
+  public String getAuthor() {return this.author;}
   public String getDuration() {return this.duration;}
 }
