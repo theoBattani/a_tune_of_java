@@ -1,16 +1,29 @@
 
 DELIMITER $
 
+CREATE PROCEDURE get_all_pieces()
+BEGIN
+  SELECT  
+    piece.title AS title, 
+    CONCAT_WS(' ', person.firstname, person.lastname) AS author,
+    piece.duration AS duration
+    FROM piece
+  INNER JOIN authors
+    ON authors.id_piece = piece.id_piece
+  INNER JOIN person 
+    ON person.id_person = authors.id_person;
+END $
+
 CREATE PROCEDURE get_bands_playing_piece(IN p_id_piece INT)
 BEGIN
-  SELECT band.denomination,  
+  SELECT  
+    band.denomination AS band_label,  
+    CONCAT_WS(' ', person.fristname, person.lastname) AS correspondent
     FROM band
-  INNER JOIN play_piece 
-    ON play_piece.id_piece = piece.id_piece
   INNER JOIN performance
-    ON performance.id_performance = play_piece.id_performance
-  INNER JOIN during 
-    ON during.id_performance = performance.id_performance
+    ON performance.id_band = performance.id_band
+  INNER JOIN play_piece 
+    ON play_piece.id_performance = performance.id_performance
   WHERE id_piece = p_id_piece;
 END $
 

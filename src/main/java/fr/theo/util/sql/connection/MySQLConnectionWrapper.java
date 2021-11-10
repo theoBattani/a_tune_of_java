@@ -3,6 +3,7 @@ package fr.theo.util.sql.connection;
 
 import fr.theo.util.sql.query.QueryBuilder;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,8 +16,8 @@ public class MySQLConnectionWrapper {
   private Connection connection;
   private String url;
 
-  public MySQLConnectionWrapper(String host, String port, String dataBase) {
-    this.url = String.format("jdbc:mysql://%s:%s/%s", host, port, dataBase);
+  public MySQLConnectionWrapper(String host, String port, String database) {
+    this.url = String.format("jdbc:mysql://%s:%s/%s", host, port, database);
   }
 
   public void open(String username, String password) {
@@ -33,6 +34,14 @@ public class MySQLConnectionWrapper {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public CallableStatement getProcedure(String procedure) throws SQLException {
+    CallableStatement statement 
+      = (CallableStatement) this.connection.prepareStatement(
+      String.format("CALL %s();", procedure)
+    );
+    return statement;
   }
 
   public int countRows(String table) {
