@@ -12,47 +12,67 @@ import javafx.collections.ObservableList;
 
 public class ATuneOfJavaDatabase {
 
-  private static String HOST = "localhost";
-  private static String PORT = "3306";
-  private static String DATABASE_NAME = "a_tune_of_java_db";
-
   private MySQLConnectionWrapper connection;
 
-  public ATuneOfJavaDatabase() {
-    this.connection = new MySQLConnectionWrapper(HOST, PORT, DATABASE_NAME);
-    this.connection.open("root", "");
+  public ATuneOfJavaDatabase(
+    String host,
+    String port,
+    String name,
+    String user,
+    String password
+  ) {
+    this.connection = new MySQLConnectionWrapper(host, port, name);
+    this.connection.open(user, password);
   }
 
   public void closeConnection() {this.connection.close();}
 
   public ObservableList<Piece> getAllPieces() {
-    ArrayList<String> result = this.connection.callProcedure("get_all_pieces");
     ObservableList<Piece> output = FXCollections.observableArrayList();
-    for (String str: result) {
-      String[] map = str.split(",", 0);
+    ArrayList<String> result = this.connection.callProcedure("get_all_pieces");
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
       String title = "";
       String author = "";
       String duration = "";
-      for (String column: map) {
+      for (String column: columns) {
         String[] field = column.split(":", 0);
         switch (field[0]) {
+          case "id_piece" : id = Integer.parseInt(field[1]); break;
           case "denomination": title = field[1]; break;
           case "author": author = field[1]; break;
           case "duration": duration = field[1]; break;
         }
       }
-      output.add(new Piece(title, author, duration));
+      output.add(new Piece(id, title, author, duration));
     }
     return output;
   }
 
   public ObservableList<Band> getBandsByPiece(int piece_id) {
+    ObservableList<Band> output = FXCollections.observableArrayList();
     ArrayList<String> result = this.connection.callProcedure(
       "get_bands_playing_piece",
       String.format("%d", piece_id)
     );
-    ObservableList<Band> output = FXCollections.observableArrayList();
-
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
+      String name = "";
+      String correspondent = "";
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id": id = Integer.parseInt(field[1]);
+          case "denomination": name = field[1]; break;
+          case "correspondent": correspondent = field[1]; break;
+          default:
+            break;
+        }
+      }
+      output.add(new Band(id, name, correspondent));
+    }
     return output;
   }
   

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.stage.Stage?>
 
-<Stage fx:id="stage" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.LoginController">
+<Stage fx:id="stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.LoginController">
    <scene>
       <Scene>
          <root>
@@ -76,7 +76,7 @@
                         <Font name="Consolas Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="ipTextField1" layoutX="267.0" layoutY="53.0" prefHeight="25.0" prefWidth="43.0" style="-fx-background-color: #ccc;" text="3306">
+                  <TextField fx:id="portTextField" layoutX="267.0" layoutY="53.0" prefHeight="25.0" prefWidth="43.0" style="-fx-background-color: #ccc;" text="3306">
                      <font>
                         <Font name="Consolas Bold" size="12.0" />
                      </font>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.BandsByPieceController">
+   <children>
+      <Label layoutX="14.0" layoutY="7.0" text="Titres">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tab1_pieceTableView" layoutX="14.0" layoutY="39.0" prefHeight="398.0" prefWidth="289.0">
+        <columns>
+          <TableColumn fx:id="tab1_titleColumn" prefWidth="108.0" text="Titre" />
+          <TableColumn fx:id="tab1_authorColumn" prefWidth="114.0" text="Auteur" />
+            <TableColumn fx:id="tab1_durationColumn" prefWidth="66.0" text="Durée" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tab1_bandTableView" layoutX="327.0" layoutY="39.0" prefHeight="398.0" prefWidth="299.0">
+         <columns>
+            <TableColumn fx:id="tab1_bandNameColumn" prefWidth="146.0" text="Nom" />
+            <TableColumn fx:id="tab1_correspondentColumn" prefWidth="152.0" text="Représentant" />
+         </columns>
+      </TableView>
+      <Label layoutX="340.0" layoutY="7.0" text="Groupes jouants le titre">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

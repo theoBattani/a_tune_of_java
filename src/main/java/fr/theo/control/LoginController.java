@@ -22,18 +22,24 @@ public class LoginController {
 
   // Values injected by FXMLLoader
   @FXML private Stage stage;
-  @FXML private TextField databaseNameTextField;
   @FXML private TextField ipTextField;
+  @FXML private TextField portTextField;
+  @FXML private TextField databaseNameTextField;
+  @FXML private TextField usernameTextField; 
+  @FXML private TextField passwordTextField;
   @FXML private Button connectButton;
   @FXML private Button exitButton;
-  @FXML private TextField passwordTextField;
-  @FXML private TextField usernameTextField; 
 
   @FXML void onConnectButton(ActionEvent event) {
-    Stage viewStage;
     try {
-      viewStage = Loader.loadFXML("view");
-      viewStage.show();
+      Controller.openDatabase(
+        ipTextField.getText(), 
+        portTextField.getText(), 
+        databaseNameTextField.getText(), 
+        usernameTextField.getText(), 
+        passwordTextField.getText()
+      );
+      ((Stage) Loader.loadFXML("view")).show();
       stage.close();
     } catch (IOException e) {
       e.printStackTrace();

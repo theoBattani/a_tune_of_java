@@ -38,9 +38,7 @@ public class MySQLConnectionWrapper {
   public ArrayList<String> callProcedure(String procedure, String... args) {
     try {
       return parseResultSet(
-        this.connection
-          .createStatement()
-          .executeQuery(
+        this.connection.createStatement().executeQuery(
             (new QueryBuilder()).call(procedure, args).build()
           )
       );
