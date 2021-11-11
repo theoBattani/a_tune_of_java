@@ -9,4 +9,7 @@ public class Band {
     this.name = name;
     this.correspondent = correspondant;
   }
+
+  public String getName() {return this.name;}
+  public String getCorrespondent() {return this.correspondent;}
 }

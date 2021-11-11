@@ -2,6 +2,7 @@
 package fr.theo.data.base;
 
 import fr.theo.util.sql.connection.MySQLConnectionWrapper;
+import fr.theo.data.table.Band;
 import fr.theo.data.table.Piece;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class ATuneOfJavaDatabase {
     this.connection.open("root", "");
   }
 
-  public void closeConnection() {connection.close();}
+  public void closeConnection() {this.connection.close();}
 
   public ObservableList<Piece> getAllPieces() {
     ArrayList<String> result = this.connection.callProcedure("get_all_pieces");
@@ -42,6 +43,16 @@ public class ATuneOfJavaDatabase {
       }
       output.add(new Piece(title, author, duration));
     }
+    return output;
+  }
+
+  public ObservableList<Band> getBandsByPiece(int piece_id) {
+    ArrayList<String> result = this.connection.callProcedure(
+      "get_bands_playing_piece",
+      String.format("%d", piece_id)
+    );
+    ObservableList<Band> output = FXCollections.observableArrayList();
+
     return output;
   }
   

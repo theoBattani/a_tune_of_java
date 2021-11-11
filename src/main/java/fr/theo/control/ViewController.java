@@ -46,6 +46,13 @@ public class ViewController {
       new PropertyValueFactory<Piece, String>("duration")
     );
 
+    tab1_bandNameColumn.setCellValueFactory(
+      new PropertyValueFactory<Band, String>("name")
+    );
+    tab1_correspondentColumn.setCellValueFactory(
+      new PropertyValueFactory<Band, String>("correspondent")
+    );
+
     ATuneOfJavaDatabase database = new ATuneOfJavaDatabase();
 
     tab1_pieceTableView.setItems(database.getAllPieces());

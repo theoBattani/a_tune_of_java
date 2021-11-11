@@ -1,7 +1,6 @@
 
 package fr.theo.util.sql.connection;
 
-import fr.theo.util.sql.query.Keywords;
 import fr.theo.util.sql.query.QueryBuilder;
 
 import java.sql.Connection;
@@ -36,13 +35,13 @@ public class MySQLConnectionWrapper {
     }
   }
 
-  public ArrayList<String> callProcedure(String procedure, String... parameters) {
+  public ArrayList<String> callProcedure(String procedure, String... args) {
     try {
       return parseResultSet(
         this.connection
           .createStatement()
           .executeQuery(
-            (new QueryBuilder()).call(procedure, parameters).build()
+            (new QueryBuilder()).call(procedure, args).build()
           )
       );
     } catch (SQLException e) {
