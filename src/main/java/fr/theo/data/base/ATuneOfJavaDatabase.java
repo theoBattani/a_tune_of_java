@@ -17,11 +17,11 @@ public class ATuneOfJavaDatabase {
   public ATuneOfJavaDatabase(
     String host,
     String port,
-    String name,
+    String database,
     String user,
     String password
   ) {
-    this.connection = new MySQLConnectionWrapper(host, port, name);
+    this.connection = new MySQLConnectionWrapper(host, port, database);
     this.connection.open(user, password);
   }
 
@@ -42,7 +42,10 @@ public class ATuneOfJavaDatabase {
           case "id_piece" : id = Integer.parseInt(field[1]); break;
           case "denomination": title = field[1]; break;
           case "author": author = field[1]; break;
-          case "duration": duration = field[1]; break;
+          case "duration": 
+            int d = Integer.parseInt(field[1]);
+            duration = String.format("%d:%d", d / 60, d % 60); 
+            break;
         }
       }
       output.add(new Piece(id, title, author, duration));

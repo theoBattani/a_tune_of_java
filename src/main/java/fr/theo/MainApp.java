@@ -1,19 +1,19 @@
 
 package fr.theo;
 
-import fr.theo.util.fxml.Loader;
+
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import fr.theo.util.fxml.Loader;
 
 public class MainApp extends Application {
 
   @Override
   public void start(Stage s) throws IOException {
-    Stage stage = Loader.loadFXML("login");
-    stage.show();
+    ((Stage) Loader.loadFXML("login")).show();
   }
 
   public static void main(String[] args) {

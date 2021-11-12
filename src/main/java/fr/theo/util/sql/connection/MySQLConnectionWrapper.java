@@ -37,10 +37,10 @@ public class MySQLConnectionWrapper {
 
   public ArrayList<String> callProcedure(String procedure, String... args) {
     try {
-      return parseResultSet(
+      return getResult(
         this.connection.createStatement().executeQuery(
-            (new QueryBuilder()).call(procedure, args).build()
-          )
+          (new QueryBuilder()).call(procedure, args).build()
+        )
       );
     } catch (SQLException e) {
       e.printStackTrace();
@@ -154,7 +154,7 @@ public class MySQLConnectionWrapper {
     return output;
   }
 
-  private ArrayList<String> parseResultSet(ResultSet pResultSet) {
+  private ArrayList<String> getResult(ResultSet pResultSet) {
     ArrayList<String> output = null;
     try {
       output = new ArrayList<>();
@@ -166,8 +166,16 @@ public class MySQLConnectionWrapper {
       while (pResultSet.next()) {
         StringBuilder builder = new StringBuilder();
         for (int columnIndex = 0; columnIndex < columnCount - 1; columnIndex++)
-          builder.append(String.format("%s:%s,", columnNames[columnIndex], pResultSet.getString(columnIndex+1)));
-        builder.append(String.format("%s:%s", columnNames[columnCount-1], pResultSet.getString(columnCount)));
+          builder.append(String.format(
+            "%s:%s,", 
+            columnNames[columnIndex], 
+            pResultSet.getString(columnIndex+1)
+          ));
+        builder.append(String.format(
+          "%s:%s", 
+          columnNames[columnCount-1], 
+          pResultSet.getString(columnCount)
+        ));
         output.add(builder.toString());
       }
     } catch (SQLException e) {

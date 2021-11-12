@@ -40,22 +40,22 @@ public class LoginController {
         passwordTextField.getText()
       );
       ((Stage) Loader.loadFXML("view")).show();
-      stage.close();
+      this.stage.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 
   @FXML void onExitButton(ActionEvent event) {stage.close();}
 
   // This method is called by the FXMLLoader when initialization is complete
   @FXML void initialize() {
-    assert connectButton != null : "fx:id=\"connectButton\" was not injected: check your FXML file 'login.fxml'.";
-    assert databaseNameTextField != null : "fx:id=\"databaseNameTextField\" was not injected: check your FXML file 'login.fxml'.";
-    assert exitButton != null : "fx:id=\"exitButton\" was not injected: check your FXML file 'login.fxml'.";
     assert ipTextField != null : "fx:id=\"ipTextField\" was not injected: check your FXML file 'login.fxml'.";
-    assert passwordTextField != null : "fx:id=\"passwordTextField\" was not injected: check your FXML file 'login.fxml'.";
+    assert portTextField != null : "fx:id=\"portTextField\" was not injected: check your FXML file 'login.fxml'.";
+    assert databaseNameTextField != null : "fx:id=\"databaseNameTextField\" was not injected: check your FXML file 'login.fxml'.";
     assert usernameTextField != null : "fx:id=\"usernameTextField\" was not injected: check your FXML file 'login.fxml'.";
+    assert passwordTextField != null : "fx:id=\"passwordTextField\" was not injected: check your FXML file 'login.fxml'.";
+    assert connectButton != null : "fx:id=\"connectButton\" was not injected: check your FXML file 'login.fxml'.";
+    assert exitButton != null : "fx:id=\"exitButton\" was not injected: check your FXML file 'login.fxml'.";
   }
 }
