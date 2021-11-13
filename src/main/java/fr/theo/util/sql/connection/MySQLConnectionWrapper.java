@@ -3,10 +3,11 @@ package fr.theo.util.sql.connection;
 
 import fr.theo.util.sql.query.QueryBuilder;
 
+import java.util.ArrayList;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 

@@ -18,11 +18,12 @@ END $
 CREATE PROCEDURE get_bands_playing_piece(IN p_id_piece INT)
 BEGIN
   SELECT  
+    band.id_band,
     band.denomination AS band_label,  
     CONCAT_WS(' ', person.firstname, person.lastname) AS correspondent
     FROM band
   INNER JOIN performance
-    ON performance.id_band = performance.id_band
+    ON performance.id_band = band.id_band
   INNER JOIN person
     ON person.id_person = band.id_person
   INNER JOIN play_piece 
@@ -35,10 +36,12 @@ CREATE PROCEDURE get_meetings_by_piece_and_band(
   IN p_id_band INT
 ) 
 BEGIN 
-  SELECT meeting.label, band.denomination 
+  SELECT meeting.label, meeting.expected_visitors
     FROM meeting
   INNER JOIN during 
     ON during.id_meeting = meeting.id_meeting
+  INNER JOIN performance
+    ON performance.id_performance = during.id_performance
   INNER JOIN band 
     ON band.id_band = performance.id_band
   INNER JOIN play_piece 

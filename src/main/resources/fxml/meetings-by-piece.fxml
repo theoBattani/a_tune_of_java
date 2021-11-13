@@ -6,24 +6,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="641.0" style="-fx-background-color: #666;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.BandsByPieceController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="641.0" style="-fx-background-color: #666;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.MeetingsByPieceController">
    <children>
-      <Label layoutX="14.0" layoutY="7.0" text="Titres" textFill="WHITE">
+      <Label layoutX="14.0" layoutY="7.0" text="Titres et groupes" textFill="WHITE">
          <font>
             <Font name="Consolas Bold" size="16.0" />
          </font>
       </Label>
-      <TableView fx:id="tab1_pieceTableView" layoutX="14.0" layoutY="39.0" prefHeight="398.0" prefWidth="289.0">
+      <TableView fx:id="pieceTableView" layoutX="14.0" layoutY="39.0" prefHeight="398.0" prefWidth="289.0">
         <columns>
-          <TableColumn fx:id="tab1_titleColumn" prefWidth="108.0" text="Titre" />
-          <TableColumn fx:id="tab1_authorColumn" prefWidth="114.0" text="Auteur" />
-            <TableColumn fx:id="tab1_durationColumn" prefWidth="66.0" text="Durée" />
+          <TableColumn fx:id="titleColumn" prefWidth="143.0" text="Titre" />
+          <TableColumn fx:id="bandColumn" prefWidth="145.0" text="Groupe" />
         </columns>
       </TableView>
-      <TableView fx:id="tab1_bandTableView" layoutX="327.0" layoutY="39.0" prefHeight="398.0" prefWidth="299.0">
+      <TableView fx:id="meetingTableView" layoutX="327.0" layoutY="39.0" prefHeight="398.0" prefWidth="299.0">
          <columns>
-            <TableColumn fx:id="tab1_bandNameColumn" prefWidth="222.0" text="Nom" />
-            <TableColumn fx:id="tab1_correspondentColumn" prefWidth="76.0" text="Visiteurs" />
+            <TableColumn fx:id="meetingNameColumn" prefWidth="212.0" text="Nom" />
+            <TableColumn fx:id="visitorsColumn" prefWidth="86.0" text="Visiteurs" />
          </columns>
       </TableView>
       <Label layoutX="340.0" layoutY="7.0" text="Rencntres" textFill="WHITE">
