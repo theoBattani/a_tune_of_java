@@ -1,37 +1,67 @@
-
 package fr.theo.control;
 
-import java.io.IOException;
-
-import fr.theo.util.fxml.Loader;
+import fr.theo.data.table.Instrument;
+import fr.theo.data.table.Speciality;
+import fr.theo.data.table.Piece;
+import fr.theo.data.table.Band;
+import fr.theo.data.table.Member;
+import fr.theo.data.table.Meeting;
+import fr.theo.data.table.Place;
 
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ViewController {
 
-  @FXML private Stage stage;
-  @FXML private Scene scene;
-  @FXML private AnchorPane tab1AnchorPane;
-  @FXML private AnchorPane tab2AnchorPane;
+    @FXML private TextField pieceDurationTextField;
+    @FXML private TextField bandCountTextField;
 
-  @FXML // This method is called by the FXMLLoader when initialization is complete
-  void initialize() {
-    assert stage != null : "fx:id=\"stage\" was not injected: check your FXML file 'view.fxml'.";
-    assert scene != null : "fx:id=\"scene\" was not injected: check your FXML file 'view.fxml'.";
-    assert tab1AnchorPane != null : "fx:id=\"tab1\" was not injected: check your FXML file 'view.fxml'.";
-    assert tab2AnchorPane != null : "fx:id=\"tab2\" was not injected: check your FXML file 'view.fxml'.";
-    try {
-      tab1AnchorPane.getChildren().add(Loader.loadFXML("bands-by-piece"));
-      System.out.println("tab1 loaded");
-      tab2AnchorPane.getChildren().add(Loader.loadFXML("meetings-by-piece"));
-      System.out.println("tab2 loaded");
-    } catch (IOException e) {
-      e.printStackTrace();
+    @FXML private ChoiceBox<Speciality> specialityChoiceBox;
+    @FXML private ChoiceBox<Instrument> instrumentChoiceBox;
+
+    @FXML private TableView<Piece> pieceTableView;
+    @FXML private TableColumn<Piece, String> pieceTitleColumn;
+    @FXML private TableColumn<Piece, String> pieceAuthorColumn;
+    @FXML private TableColumn<Piece, String> pieceDurationColumn;
+
+    @FXML private TableView<Band> bandTableView;
+    @FXML private TableColumn<Band, String> bandNameColumn;
+    @FXML private TableColumn<Band, String> bandCorrespondentColumn;
+
+    @FXML private TableView<Member> memberTableView;
+    @FXML private TableColumn<Member, String> memberNameColumn;
+    @FXML private TableColumn<Member, String> memberInstrumentColumn;
+
+    @FXML private TableView<Meeting> meetingTableView;
+    @FXML private TableColumn<Meeting, String> meetingNameColumn;
+    @FXML private TableColumn<Meeting, Integer> meetingVisitorsColumn;
+
+    @FXML private TableView<Place> placeTableView;
+    @FXML private TableColumn<Place, String> placeCityColumn;
+    @FXML private TableColumn<Place, String> placeCountryColumn;
+
+    @FXML public void initialize() {
+
+      pieceTitleColumn.setCellValueFactory(
+        new PropertyValueFactory<Piece, String>("title")
+      );
+      pieceAuthorColumn.setCellValueFactory(
+        new PropertyValueFactory<Piece, String>("author")
+      );
+      pieceDurationColumn.setCellValueFactory(
+        new PropertyValueFactory<Piece, String>("duration")
+      );
+
+      bandNameColumn.setCellValueFactory(
+        new PropertyValueFactory<Band, String>("name")
+      );
+      bandCorrespondentColumn.setCellValueFactory(
+        new PropertyValueFactory<Band, String>("correspondent")
+      );
     }
-
-  }
 
 }

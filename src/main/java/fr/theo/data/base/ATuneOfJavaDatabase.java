@@ -5,7 +5,6 @@ import fr.theo.util.sql.connection.MySQLConnectionWrapper;
 import fr.theo.data.table.Band;
 import fr.theo.data.table.Meeting;
 import fr.theo.data.table.Piece;
-import fr.theo.data.table.PieceBand;
 
 import java.util.ArrayList;
 
@@ -85,19 +84,6 @@ public class ATuneOfJavaDatabase {
       }
       output.add(new Band(id, name, correspondent));
     }
-    return output;
-  }
-
-  public ObservableList<PieceBand> getAllPieceBands() {
-    ObservableList<PieceBand> output = FXCollections.observableArrayList();
-    for (Piece piece: getAllPieces())
-      for (Band band: getBandsByPiece(piece.getId()))
-        output.add(new PieceBand(
-          piece.getId(), 
-          band.getId(), 
-          piece.getTitle(), 
-          band.getName()
-        ));
     return output;
   }
 

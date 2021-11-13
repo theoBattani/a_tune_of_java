@@ -1,38 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Scene?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.stage.Stage?>
+<?import javafx.scene.text.Font?>
 
-<Stage fx:id="stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.ViewController">
-   <scene>
-      <Scene fx:id="scene">
-         <root>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0">
-               <children>
-                  <TabPane prefHeight="480.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                        <Tab fx:id="tab1" text="Groupes par titre">
-                           <content>
-                              <AnchorPane fx:id="tab1AnchorPane" prefHeight="200.0" prefWidth="200.0" />
-                           </content></Tab>
-                      <Tab text="Rencontres par titres">
-                        <content>
-                          <AnchorPane fx:id="tab2AnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                      <Tab text="Untitled Tab 2">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
-               </children>
-            </AnchorPane>
-         </root>
-      </Scene>
-   </scene>
-</Stage>
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="640.0" style="-fx-background-color: #666;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.ViewController">
+   <children>
+      <Label layoutX="120.0" layoutY="7.0" text="Titres" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="pieceTableView" layoutX="14.0" layoutY="65.0" prefHeight="102.0" prefWidth="289.0">
+        <columns>
+          <TableColumn fx:id="pieceTitleColumn" prefWidth="104.0" text="Titre" />
+          <TableColumn fx:id="pieceAuthorColumn" prefWidth="131.0" text="Auteur" />
+            <TableColumn fx:id="pieceDurationColumn" prefWidth="53.0" text="Durée" />
+        </columns>
+      </TableView>
+      <TableView fx:id="meetingTableView" layoutX="327.0" layoutY="111.0" prefHeight="147.0" prefWidth="299.0">
+         <columns>
+            <TableColumn fx:id="meetingNameColumn" prefWidth="212.0" text="Nom" />
+            <TableColumn fx:id="meetingVisitorsColumn" prefWidth="86.0" text="Visiteurs" />
+         </columns>
+      </TableView>
+      <Label layoutX="437.0" layoutY="7.0" text="Rencntres" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="bandTableView" layoutX="15.0" layoutY="201.0" prefHeight="102.0" prefWidth="289.0">
+         <columns>
+            <TableColumn fx:id="bandNameColumn" prefWidth="143.0" text="Nom" />
+            <TableColumn fx:id="bandCorrespondentColumn" prefWidth="145.0" text="Représentant" />
+         </columns>
+      </TableView>
+      <Label layoutX="128.0" layoutY="177.0" text="Groupes" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="19.0" layoutY="39.0" text="Durée minimun" textFill="WHITE">
+         <font>
+            <Font name="Consolas" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="pieceDurationTextField" layoutX="142.0" layoutY="33.0" prefHeight="31.0" prefWidth="62.0" promptText="mm:ss" />
+      <Label layoutX="327.0" layoutY="40.0" text="Nombre de groupes" textFill="WHITE">
+         <font>
+            <Font name="Consolas" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="bandCountTextField" layoutX="484.0" layoutY="34.0" prefHeight="31.0" prefWidth="62.0" />
+      <ChoiceBox fx:id="instrumentChoiceBox" layoutX="409.0" layoutY="73.0" prefWidth="150.0" />
+      <Label layoutX="327.0" layoutY="79.0" text="Intrument" textFill="WHITE">
+         <font>
+            <Font name="Consolas" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="19.0" layoutY="313.0" text="Membres" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="memberTableView" layoutX="14.0" layoutY="341.0" prefHeight="102.0" prefWidth="289.0">
+         <columns>
+            <TableColumn fx:id="memberNameColumn" prefWidth="161.0" text="Nom" />
+            <TableColumn fx:id="memberInstrumentColumn" prefWidth="127.0" text="Instrument" />
+         </columns>
+      </TableView>
+      <Label layoutX="448.0" layoutY="265.0" text="Lieux" textFill="WHITE">
+         <font>
+            <Font name="Consolas Bold" size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="placeTableView" layoutX="327.0" layoutY="294.0" prefHeight="147.0" prefWidth="299.0">
+         <columns>
+            <TableColumn fx:id="placeCityColumn" prefWidth="153.0" text="Ville" />
+            <TableColumn fx:id="placeCountryColumn" prefWidth="145.0" text="Pays" />
+         </columns>
+      </TableView>
+      <ChoiceBox fx:id="specialityChoiceBox" layoutX="85.0" layoutY="307.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
