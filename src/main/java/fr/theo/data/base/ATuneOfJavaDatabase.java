@@ -73,7 +73,7 @@ public class ATuneOfJavaDatabase {
       for (String column: columns) {
         String[] field = column.split(":", 0);
         switch (field[0]) {
-          case "id_band": id = Integer.parseInt(field[1]);
+          case "id_band": id = Integer.parseInt(field[1]); break;
           case "denomination": name = field[1]; break;
           case "correspondent": correspondent = field[1]; break;
           default:
@@ -97,10 +97,11 @@ public class ATuneOfJavaDatabase {
       for (String column: columns) {
         String[] field = column.split(":", 0);
         switch (field[0]) {
-          case "id": id = Integer.parseInt(field[1]);
+          case "id_meeting": id = Integer.parseInt(field[1]); break;
           case "label": name = field[1]; break;
           case "expected_visitors": visitors = Integer.parseInt(field[1]); break;
           default:
+            System.out.println(field[0]);
             break;
         }
       }
@@ -136,22 +137,25 @@ public class ATuneOfJavaDatabase {
       String.format("%d", id_meeting),
       String.format("%d", id_speciality)
     );
-    // for (String row: result) {
-    //   String[] columns = row.split(",", 0);
-    //   int id = -1;
-    //   String name = "";
-    //   int visitors = -1;
-    //   for (String column: columns) {
-    //     String[] field = column.split(":", 0);
-    //     switch (field[0]) {
-    //       case "id": id = Integer.parseInt(field[1]);
-    //       case "label": name = field[1]; break;
-    //       case "expected_visitors": visitors = Integer.parseInt(field[1]); break;
-    //       default:
-    //         break;
-    //     }
-    //   }
-    //   output.add(new Meeting(id, name, visitors));
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      System.out.println(columns.length);
+      int id = -1;
+      String name = "";
+      String instrument = "";
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        System.out.println(field[0]);
+        switch (field[0]) {
+          case "id": id = Integer.parseInt(field[1]);
+          case "label": name = field[1]; break;
+          case "insturment": instrument = field[1]; break;
+          default:
+            System.out.println(field[0]);
+            break;
+        }
+      }
+      output.add(new Member(id, name, instrument));
     }
     return output;
   }
@@ -198,7 +202,7 @@ public class ATuneOfJavaDatabase {
       for (String column: columns) {
         String[] field = column.split(":", 0);
         switch (field[0]) {
-          case "id": id = Integer.parseInt(field[1]);
+          case "id_meeting": id = Integer.parseInt(field[1]);
           case "label": name = field[1]; break;
           case "expected_visitors": visitors = Integer.parseInt(field[1]); break;
           default:

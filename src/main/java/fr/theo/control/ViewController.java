@@ -86,7 +86,21 @@ public class ViewController {
         }
       });
       meetingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
-
+        @Override public void handle(MouseEvent event) {
+          Meeting meeting = meetingTableView.getSelectionModel().getSelectedItem();
+          if (meeting != null) {
+            Speciality speciality = specialityChoiceBox.getValue();
+            if (speciality != null) {
+              memberTableView.setItems(
+                Controller.getDatabase()
+                  .getMusicianByMeetingAndSpeciality(
+                    meeting.getId(), 
+                    speciality.getId()
+                  )
+              );
+            }
+          }
+        }
       });
     }
 

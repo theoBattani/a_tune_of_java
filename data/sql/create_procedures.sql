@@ -29,6 +29,7 @@ END $
 CREATE PROCEDURE get_all_meetings()
 BEGIN
   SELECT 
+    meeting.id_meeting,
     meeting.label,
     meeting.expected_visitors
     FROM meeting;
@@ -55,7 +56,10 @@ CREATE PROCEDURE get_meetings_by_piece_and_band(
   IN p_id_band INT
 ) 
 BEGIN 
-  SELECT meeting.label, meeting.expected_visitors
+  SELECT 
+    meeting.id_meeting,
+    meeting.label, 
+    meeting.expected_visitors
     FROM meeting
   INNER JOIN during 
     ON during.id_meeting = meeting.id_meeting
@@ -77,25 +81,44 @@ BEGIN
   SELECT 
     CONCAT_WS(' ', person.firstname, person.lastname),
     instrument.denomination
-    FROM person
-  INNER JOIN musician 
-    ON musician.id_person = person.id_person
-  INNER JOIN member_of_band 
-    ON member_of_band.id_musician = musician.id_musician
+    FROM meeting
+  INNER JOIN during
+    ON during.id_meeting = meeting.id_meeting
+  INNER JOIN performance
+    ON performance.id_performance = during.id_performance
   INNER JOIN band 
-    ON band.id_band = member_of_band.id_band
-  INNER JOIN performance 
-    ON performance.id_band = band.id_band
-  INNER JOIN during 
-    ON during.id_performance = performance.id_performance
-  INNER JOIN meeting 
-    ON meeting.id_meeting = during.id_meeting
+    ON band.id_band = performance.id_band
+  INNER JOIN member_of_band
+    ON member_of_band.id_band = band.id_band
+  INNER JOIN musician
+    ON musician.id_musician = member_of_band.id_musician
+  INNER JOIN person
+    ON person.id_person = musician.id_person
   INNER JOIN play
     ON play.id_musician = musician.id_musician
   INNER JOIN instrument
     ON instrument.id_instrument = play.id_instrument
-  WHERE meeting.id_meeting = p_id_meeting 
+  WHERE meeting.id_meeting = p_id_meeting
     AND musician.id_speciality = p_id_speciality;
+  --   FROM person
+  -- INNER JOIN musician 
+  --   ON musician.id_person = person.id_person
+  -- INNER JOIN member_of_band 
+  --   ON member_of_band.id_musician = musician.id_musician
+  -- INNER JOIN band 
+  --   ON band.id_band = member_of_band.id_band
+  -- INNER JOIN performance 
+  --   ON performance.id_band = band.id_band
+  -- INNER JOIN during 
+  --   ON during.id_performance = performance.id_performance
+  -- INNER JOIN meeting 
+  --   ON meeting.id_meeting = during.id_meeting
+  -- INNER JOIN play
+  --   ON play.id_musician = musician.id_musician
+  -- INNER JOIN instrument
+  --   ON instrument.id_instrument = play.id_instrument
+  -- WHERE meeting.id_meeting = p_id_meeting 
+  --   AND musician.id_speciality = p_id_speciality;
 END $
 
 CREATE PROCEDURE get_piece_by_country_longer_than(
