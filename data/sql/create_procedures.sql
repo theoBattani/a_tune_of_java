@@ -15,6 +15,25 @@ BEGIN
     ON person.id_person = authors.id_person;
 END $
 
+CREATE PROCEDURE get_all_bands()
+BEGIN
+  SELECT
+    band.id_band,
+    band.denomination AS band_label,  
+    CONCAT_WS(' ', person.firstname, person.lastname) AS correspondent
+    FROM band
+  INNER JOIN person
+    ON person.id_person = band.id_person;
+END $ 
+
+CREATE PROCEDURE get_all_meetings()
+BEGIN
+  SELECT 
+    meeting.label,
+    meeting.expected_visitors
+    FROM meeting;
+END $
+
 CREATE PROCEDURE get_bands_playing_piece(IN p_id_piece INT)
 BEGIN
   SELECT  
@@ -55,7 +74,9 @@ CREATE PROCEDURE get_musician_by_meeting_and_speciality(
   IN p_id_speciality iNT
 )
 BEGIN
-  SELECT firstname, lastname 
+  SELECT 
+    CONCAT_WS(' ', person.firstname, person.lastname),
+    instrument.denomination
     FROM person
   INNER JOIN musician 
     ON musician.id_person = person.id_person
@@ -69,6 +90,10 @@ BEGIN
     ON during.id_performance = performance.id_performance
   INNER JOIN meeting 
     ON meeting.id_meeting = during.id_meeting
+  INNER JOIN play
+    ON play.id_musician = musician.id_musician
+  INNER JOIN instrument
+    ON instrument.id_instrument = play.id_instrument
   WHERE meeting.id_meeting = p_id_meeting 
     AND musician.id_speciality = p_id_speciality;
 END $

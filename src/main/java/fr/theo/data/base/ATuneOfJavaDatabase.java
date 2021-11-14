@@ -4,7 +4,9 @@ package fr.theo.data.base;
 import fr.theo.util.sql.connection.MySQLConnectionWrapper;
 import fr.theo.data.table.Band;
 import fr.theo.data.table.Meeting;
+import fr.theo.data.table.Member;
 import fr.theo.data.table.Piece;
+import fr.theo.data.table.Speciality;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,100 @@ public class ATuneOfJavaDatabase {
     }
     return output;
   }
+  
+  public ObservableList<Band> getAllBands() {
+    ObservableList<Band> output = FXCollections.observableArrayList();
+    ArrayList<String> result = this.connection.callProcedure("get_all_bands");
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
+      String name = "";
+      String correspondent = "";
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id_band": id = Integer.parseInt(field[1]);
+          case "denomination": name = field[1]; break;
+          case "correspondent": correspondent = field[1]; break;
+          default:
+            System.out.println(field[0]);
+            break;
+        }
+      }
+      output.add(new Band(id, name, correspondent));
+    }
+    return output;
+  }
+
+  public ObservableList<Meeting> getAllMeetings() {
+    ObservableList<Meeting> output = FXCollections.observableArrayList();
+    ArrayList<String> result = this.connection.callProcedure("get_all_meetings");
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
+      String name = "";
+      int visitors = -1;
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id": id = Integer.parseInt(field[1]);
+          case "label": name = field[1]; break;
+          case "expected_visitors": visitors = Integer.parseInt(field[1]); break;
+          default:
+            break;
+        }
+      }
+      output.add(new Meeting(id, name, visitors));
+    }
+    return output;
+  }
+
+  public ObservableList<Speciality> getAllSpecialities() {
+    ObservableList<Speciality> output = FXCollections.observableArrayList();
+    String[] result = this.connection.SelectAll("speciality");
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
+      String label = "";
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id_speciality": id = Integer.parseInt(field[1]); break;
+          case "denomination": label = field[1]; break;
+          default: break;
+        }
+      }
+      output.add(new Speciality(id, label));
+    }
+    return output;
+  }
+
+  public ObservableList<Member> getMusicianByMeetingAndSpeciality(int id_meeting, int id_speciality) {
+    ObservableList<Member> output = FXCollections.observableArrayList();
+    ArrayList<String> result = this.connection.callProcedure(
+      "get_musician_by_meeting_and_speciality",
+      String.format("%d", id_meeting),
+      String.format("%d", id_speciality)
+    );
+    // for (String row: result) {
+    //   String[] columns = row.split(",", 0);
+    //   int id = -1;
+    //   String name = "";
+    //   int visitors = -1;
+    //   for (String column: columns) {
+    //     String[] field = column.split(":", 0);
+    //     switch (field[0]) {
+    //       case "id": id = Integer.parseInt(field[1]);
+    //       case "label": name = field[1]; break;
+    //       case "expected_visitors": visitors = Integer.parseInt(field[1]); break;
+    //       default:
+    //         break;
+    //     }
+    //   }
+    //   output.add(new Meeting(id, name, visitors));
+    }
+    return output;
+  }
 
   public ObservableList<Band> getBandsByPiece(int piece_id) {
     ObservableList<Band> output = FXCollections.observableArrayList();
@@ -87,7 +183,7 @@ public class ATuneOfJavaDatabase {
     return output;
   }
 
-  public ObservableList<Meeting> getMeetingssByPieceAndBand(int piece_id, int band_id) {
+  public ObservableList<Meeting> getMeetingsByPieceAndBand(int piece_id, int band_id) {
     ObservableList<Meeting> output = FXCollections.observableArrayList();
     ArrayList<String> result = this.connection.callProcedure(
       "get_meetings_by_piece_and_band",

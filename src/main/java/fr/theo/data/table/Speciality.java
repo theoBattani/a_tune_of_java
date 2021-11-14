@@ -1,3 +1,4 @@
+
 package fr.theo.data.table;
 
 public class Speciality {
@@ -12,4 +13,6 @@ public class Speciality {
 
   public int getId() {return this.id;}
   public String getLabel() {return this.label;}
+
+  @Override public String toString() {return getLabel();}
 }

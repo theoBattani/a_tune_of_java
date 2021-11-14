@@ -14,6 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class ViewController {
 
@@ -45,7 +47,56 @@ public class ViewController {
     @FXML private TableColumn<Place, String> placeCountryColumn;
 
     @FXML public void initialize() {
+      initColumns();
+      setupChoiceBoxes();
+      setupEventHandlers();
+      setInitialState();
+    }
 
+    private void setupChoiceBoxes() {
+      specialityChoiceBox.getItems().addAll(
+        Controller.getDatabase().getAllSpecialities()
+      );
+    }
+
+    private void setupEventHandlers() {
+      pieceTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+        @Override public void handle(MouseEvent event) {
+          Piece piece = pieceTableView.getSelectionModel().getSelectedItem();
+          if (piece != null) {
+            bandTableView.setItems(
+              Controller.getDatabase()
+                .getBandsByPiece(piece.getId())
+            );
+          }
+        }
+      });
+      bandTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+        @Override public void handle(MouseEvent event) {
+          Band band = bandTableView.getSelectionModel().getSelectedItem();
+          if (band != null) {
+            Piece piece = pieceTableView.getSelectionModel().getSelectedItem();
+            if (piece != null) {
+              meetingTableView.setItems(
+                Controller.getDatabase()
+                  .getMeetingsByPieceAndBand(piece.getId(), band.getId())
+              );
+            }
+          }
+        }
+      });
+      meetingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+      });
+    }
+
+    private void setInitialState() {
+      pieceTableView.setItems(Controller.getDatabase().getAllPieces());
+      bandTableView.setItems(Controller.getDatabase().getAllBands());
+      meetingTableView.setItems(Controller.getDatabase().getAllMeetings());
+    }
+
+    private void initColumns() {
       pieceTitleColumn.setCellValueFactory(
         new PropertyValueFactory<Piece, String>("title")
       );
@@ -55,12 +106,29 @@ public class ViewController {
       pieceDurationColumn.setCellValueFactory(
         new PropertyValueFactory<Piece, String>("duration")
       );
-
       bandNameColumn.setCellValueFactory(
         new PropertyValueFactory<Band, String>("name")
       );
       bandCorrespondentColumn.setCellValueFactory(
         new PropertyValueFactory<Band, String>("correspondent")
+      );
+      memberNameColumn.setCellValueFactory(
+        new PropertyValueFactory<Member, String>("name")
+      );
+      memberInstrumentColumn.setCellValueFactory(
+        new PropertyValueFactory<Member, String>("instrument")
+      );
+      meetingNameColumn.setCellValueFactory(
+        new PropertyValueFactory<Meeting, String>("name")
+      );
+      meetingVisitorsColumn.setCellValueFactory(
+        new PropertyValueFactory<Meeting, Integer>("visitors")
+      );
+      placeCityColumn.setCellValueFactory(
+        new PropertyValueFactory<Place, String>("cityName")
+      );
+      placeCountryColumn.setCellValueFactory(
+        new PropertyValueFactory<Place, String>("countryName")
       );
     }
 
