@@ -60,6 +60,9 @@ public class ViewController {
       specialityChoiceBox.getItems().addAll(
         Controller.getDatabase().getAllSpecialities()
       );
+      instrumentChoiceBox.getItems().addAll(
+        Controller.getDatabase().getAllInstruments()
+      );
     }
 
     private void setupEventHandlers() {
@@ -113,7 +116,7 @@ public class ViewController {
             System.out.println(strDuration);
             if (Pattern.matches("[0-9][0-9]:[0-9][0-9]", strDuration)) {
               String[] splittedText = strDuration.split(":", 0);
-              int minimumDuration =   Integer.parseInt(splittedText[0]) * 60 
+              int minimumDuration = Integer.parseInt(splittedText[0]) * 60 
                                     + Integer.parseInt(splittedText[1]);
               pieceTableView.setItems(
                 Controller.getDatabase()
@@ -169,3 +172,12 @@ public class ViewController {
     }
 
 }
+
+
+
+
+
+
+
+
+

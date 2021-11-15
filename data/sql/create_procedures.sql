@@ -91,7 +91,8 @@ CREATE PROCEDURE get_musician_by_meeting_and_speciality(
 )
 BEGIN
   SELECT 
-    CONCAT_WS(' ', person.firstname, person.lastname),
+    musician.id_musician,
+    CONCAT_WS(' ', person.firstname, person.lastname) AS member,
     instrument.denomination
     FROM meeting
   INNER JOIN during

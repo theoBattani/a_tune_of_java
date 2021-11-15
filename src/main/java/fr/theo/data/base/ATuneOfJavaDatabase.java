@@ -7,6 +7,7 @@ import fr.theo.util.sql.connection.MySQLConnectionWrapper;
 
 import fr.theo.data.table.Piece;
 import fr.theo.data.table.Band;
+import fr.theo.data.table.Instrument;
 import fr.theo.data.table.Meeting;
 import fr.theo.data.table.Speciality;
 import fr.theo.data.table.Member;
@@ -192,6 +193,26 @@ public class ATuneOfJavaDatabase {
     return output;
   }
 
+    public ObservableList<Instrument> getAllInstruments() {
+    ObservableList<Instrument> output = FXCollections.observableArrayList();
+    String[] result = this.connection.SelectAll("instrument");
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
+      String label = "";
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id_instument": id = Integer.parseInt(field[1]); break;
+          case "denomination": label = field[1]; break;
+          default: break;
+        }
+      }
+      output.add(new Instrument(id, label));
+    }
+    return output;
+  }
+
   public ObservableList<Member> getMusicianByMeetingAndSpeciality(int id_meeting, int id_speciality) {
     ObservableList<Member> output = FXCollections.observableArrayList();
     ArrayList<String> result = this.connection.callProcedure(
@@ -201,17 +222,15 @@ public class ATuneOfJavaDatabase {
     );
     for (String row: result) {
       String[] columns = row.split(",", 0);
-      System.out.println(columns.length);
       int id = -1;
       String name = "";
       String instrument = "";
       for (String column: columns) {
         String[] field = column.split(":", 0);
-        System.out.println(field[0]);
         switch (field[0]) {
-          case "id": id = Integer.parseInt(field[1]);
-          case "label": name = field[1]; break;
-          case "insturment": instrument = field[1]; break;
+          case "id_musician": id = Integer.parseInt(field[1]);
+          case "member": name = field[1]; break;
+          case "denomination": instrument = field[1]; break;
           default:
             System.out.println(field[0]);
             break;

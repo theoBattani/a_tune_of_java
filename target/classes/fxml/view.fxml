@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.stage.Stage?>
 
-<Stage xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.ViewController">
+<Stage xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.control.ViewController">
    <scene>
       <Scene>
          <root>
@@ -42,7 +42,7 @@
                   <TableView fx:id="bandTableView" layoutX="15.0" layoutY="201.0" prefHeight="102.0" prefWidth="289.0">
                      <columns>
                         <TableColumn fx:id="bandNameColumn" prefWidth="130.0" text="Nom" />
-                        <TableColumn fx:id="bandCorrespondentColumn" prefWidth="145.0" text="Représentant" />
+                        <TableColumn fx:id="bandCorrespondentColumn" prefWidth="142.0" text="Représentant" />
                      </columns>
                   </TableView>
                   <Label layoutX="128.0" layoutY="177.0" text="Groupes" textFill="WHITE">
