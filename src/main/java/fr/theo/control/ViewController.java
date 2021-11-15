@@ -1,14 +1,11 @@
 package fr.theo.control;
 
-import fr.theo.data.table.Instrument;
-import fr.theo.data.table.Speciality;
 import fr.theo.data.table.Piece;
-
-import java.util.regex.Pattern;
-
 import fr.theo.data.table.Band;
-import fr.theo.data.table.Member;
 import fr.theo.data.table.Meeting;
+import fr.theo.data.table.Speciality;
+import fr.theo.data.table.Member;
+import fr.theo.data.table.Instrument;
 import fr.theo.data.table.Place;
 
 import javafx.fxml.FXML;
@@ -19,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+
+import java.util.regex.Pattern;
 
 public class ViewController {
 
@@ -50,7 +49,7 @@ public class ViewController {
     @FXML private TableColumn<Place, String> placeCountryColumn;
 
     @FXML public void initialize() {
-      initColumns();
+      setupColumns();
       setupChoiceBoxes();
       setupEventHandlers();
       setInitialState();
@@ -66,6 +65,7 @@ public class ViewController {
     }
 
     private void setupEventHandlers() {
+
       pieceTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent event) {
           Piece piece = pieceTableView.getSelectionModel().getSelectedItem();
@@ -77,6 +77,7 @@ public class ViewController {
           }
         }
       });
+
       bandTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent event) {
           Band band = bandTableView.getSelectionModel().getSelectedItem();
@@ -91,6 +92,7 @@ public class ViewController {
           }
         }
       });
+
       meetingTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent event) {
           Meeting meeting = meetingTableView.getSelectionModel().getSelectedItem();
@@ -108,6 +110,7 @@ public class ViewController {
           }
         }
       });
+
       placeTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent event) {
           Place place = placeTableView.getSelectionModel().getSelectedItem();
@@ -135,7 +138,7 @@ public class ViewController {
       placeTableView.setItems(Controller.getDatabase().getAllPlaces());
     }
 
-    private void initColumns() {
+    private void setupColumns() {
       pieceTitleColumn.setCellValueFactory(
         new PropertyValueFactory<Piece, String>("title")
       );
