@@ -1,14 +1,16 @@
 
 package fr.theo.data.base;
 
+import java.util.ArrayList;
+
 import fr.theo.util.sql.connection.MySQLConnectionWrapper;
+
+import fr.theo.data.table.Piece;
 import fr.theo.data.table.Band;
 import fr.theo.data.table.Meeting;
-import fr.theo.data.table.Member;
-import fr.theo.data.table.Piece;
 import fr.theo.data.table.Speciality;
-
-import java.util.ArrayList;
+import fr.theo.data.table.Member;
+import fr.theo.data.table.Place;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +31,30 @@ public class ATuneOfJavaDatabase {
   }
 
   public void closeConnection() {this.connection.close();}
+
+  public ObservableList<Place> getAllPlaces() {
+    ObservableList<Place> output = FXCollections.observableArrayList();
+    ArrayList<String> result = this.connection.callProcedure("get_all_places");
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int city_id = -1;
+      int country_id = -1;
+      String city_name = "";
+      String country_name = "";
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id_city": city_id = Integer.parseInt(field[1]); break;
+          case "id_country": country_id = Integer.parseInt(field[1]); break;
+          case "city_name": city_name = field[1]; break;
+          case "country_name": country_name = field[1]; break;
+          default: System.out.println(column); break;
+        }
+      }
+      output.add(new Place(city_id, country_id, city_name, country_name));
+    }
+    return output;
+  }
 
   public ObservableList<Piece> getAllPieces() {
     ObservableList<Piece> output = FXCollections.observableArrayList();

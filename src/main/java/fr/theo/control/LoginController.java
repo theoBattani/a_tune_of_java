@@ -2,8 +2,6 @@
 package fr.theo.control;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import fr.theo.util.fxml.Loader;
 import javafx.event.ActionEvent;
@@ -13,12 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginController {
-
-  // ResourceBundle that was given to the FXMLLoader
-  @FXML private ResourceBundle resources;
-
-  // URL location of the FXML file that was given to the FXMLLoader
-  @FXML private URL location;
 
   // Values injected by FXMLLoader
   @FXML private Stage stage;

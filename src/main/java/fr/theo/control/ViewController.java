@@ -3,6 +3,9 @@ package fr.theo.control;
 import fr.theo.data.table.Instrument;
 import fr.theo.data.table.Speciality;
 import fr.theo.data.table.Piece;
+
+import java.util.regex.Pattern;
+
 import fr.theo.data.table.Band;
 import fr.theo.data.table.Member;
 import fr.theo.data.table.Meeting;
@@ -102,12 +105,30 @@ public class ViewController {
           }
         }
       });
+      placeTableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+        @Override public void handle(MouseEvent event) {
+          Place place = placeTableView.getSelectionModel().getSelectedItem();
+          if (place != null) {
+            String strDuration = pieceDurationTextField.getText();
+            if (Pattern.matches("[0-59]:[0-59]", strDuration)) {
+              String[] splittedText = strDuration.split(":", 0);
+              int minimumDuration = Integer.parseInt(splittedText[0]) * 60 
+                                  + Integer.parseInt(splittedText[1]);
+              placeTableView.setItems(
+                Controller.getDatabase()
+                  .get
+              );
+            }
+          }
+        }
+      });
     }
 
     private void setInitialState() {
       pieceTableView.setItems(Controller.getDatabase().getAllPieces());
       bandTableView.setItems(Controller.getDatabase().getAllBands());
       meetingTableView.setItems(Controller.getDatabase().getAllMeetings());
+      placeTableView.setItems(Controller.getDatabase().getAllPlaces());
     }
 
     private void initColumns() {

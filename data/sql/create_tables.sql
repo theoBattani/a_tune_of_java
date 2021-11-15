@@ -5,9 +5,8 @@ CREATE TABLE civility(
 );
 
 CREATE TABLE country(
-   id_country INT,
-   denomination VARCHAR(255),
-   PRIMARY KEY(id_country)
+   country_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   country_name VARCHAR(255)
 );
 
 CREATE TABLE family(
@@ -58,11 +57,10 @@ CREATE TABLE responsibility(
 );
 
 CREATE TABLE city(
-   id_city INT,
-   denomination VARCHAR(255)  NOT NULL,
+   id_city INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   city_name VARCHAR(255)  NOT NULL,
    id_country INT NOT NULL,
-   PRIMARY KEY(id_city),
-   FOREIGN KEY(id_country) REFERENCES country(id_country)
+   FOREIGN KEY(id_country) REFERENCES country(country_id)
 );
 
 CREATE TABLE meeting(

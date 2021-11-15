@@ -35,6 +35,18 @@ BEGIN
     FROM meeting;
 END $
 
+CREATE PROCEDURE get_all_places()
+BEGIN
+  SELECT
+    city.id_city,
+    city.id_country,
+    city.city_name AS city_name,
+    country.country_name AS country_name
+    FROM city
+  INNER JOIN country
+    ON country.country_id = city.id_country;
+END $
+
 CREATE PROCEDURE get_bands_playing_piece(IN p_id_piece INT)
 BEGIN
   SELECT  
@@ -100,25 +112,6 @@ BEGIN
     ON instrument.id_instrument = play.id_instrument
   WHERE meeting.id_meeting = p_id_meeting
     AND musician.id_speciality = p_id_speciality;
-  --   FROM person
-  -- INNER JOIN musician 
-  --   ON musician.id_person = person.id_person
-  -- INNER JOIN member_of_band 
-  --   ON member_of_band.id_musician = musician.id_musician
-  -- INNER JOIN band 
-  --   ON band.id_band = member_of_band.id_band
-  -- INNER JOIN performance 
-  --   ON performance.id_band = band.id_band
-  -- INNER JOIN during 
-  --   ON during.id_performance = performance.id_performance
-  -- INNER JOIN meeting 
-  --   ON meeting.id_meeting = during.id_meeting
-  -- INNER JOIN play
-  --   ON play.id_musician = musician.id_musician
-  -- INNER JOIN instrument
-  --   ON instrument.id_instrument = play.id_instrument
-  -- WHERE meeting.id_meeting = p_id_meeting 
-  --   AND musician.id_speciality = p_id_speciality;
 END $
 
 CREATE PROCEDURE get_piece_by_country_longer_than(
@@ -139,12 +132,12 @@ BEGIN
   INNER JOIN takes_place
     ON takes_place.id_meeting = meeting.id_meeting
   INNER JOIN address
-    ON address.id_address = takers_place.id_address
+    ON address.id_address = takes_place.id_address
   INNER JOIN city
     ON city.id_city = address.id_city
-  WHERE piece.duration > p_seconds
-    AND city.id_country = p_id_country;
-END $
+  -- WHERE piece.duration > p_seconds
+  --   AND city.id_country = p_id_country;
+;END $
 
 CREATE PROCEDURE get_meeting_by_band_count(
   IN p_band_count INT
