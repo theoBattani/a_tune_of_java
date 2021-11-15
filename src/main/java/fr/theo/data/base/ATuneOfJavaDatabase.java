@@ -87,6 +87,42 @@ public class ATuneOfJavaDatabase {
     }
     return output;
   }
+
+  public ObservableList<Piece> getPiecesByCountryLongerThan(int id_country, int minimumDuration) {
+    ObservableList<Piece> output = FXCollections.observableArrayList();
+    ArrayList<String> result = this.connection.callProcedure(
+      "get_piece_by_country_longer_than",
+      String.format("%d", id_country),
+      String.format("%d", minimumDuration)
+    );
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
+      String title = "";
+      String author = "";
+      String duration = "";
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id_piece" : id = Integer.parseInt(field[1]); break;
+          case "denomination": title = field[1]; break;
+          case "author": author = field[1]; break;
+          case "duration": 
+            int d = Integer.parseInt(field[1]);
+            int q = d / 60;
+            int r = d % 60;
+            duration = String.format(
+              "%s%d:%s%d", 
+              q < 10 ? "0": "", q,
+              r < 10 ? "0": "", r
+            ); 
+            break;
+        }
+      }
+      output.add(new Piece(id, title, author, duration));
+    }
+    return output;
+  }
   
   public ObservableList<Band> getAllBands() {
     ObservableList<Band> output = FXCollections.observableArrayList();

@@ -127,6 +127,20 @@ COLUMNS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/takes_place.csv'
+-- LOAD DATA INFILE 'D:/GitHub/a_tune_of_java/data/test/takes_place.csv'
+INTO TABLE takes_place
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+LOAD DATA INFILE 'C:/Users/User-07/GitHub/a_tune_of_java/data/test/plays.csv'
+-- LOAD DATA INFILE 'D:/GitHub/a_tune_of_java/data/test/plays.csv'
+INTO TABLE play
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 

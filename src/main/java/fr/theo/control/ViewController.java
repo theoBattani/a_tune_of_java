@@ -110,13 +110,14 @@ public class ViewController {
           Place place = placeTableView.getSelectionModel().getSelectedItem();
           if (place != null) {
             String strDuration = pieceDurationTextField.getText();
-            if (Pattern.matches("[0-59]:[0-59]", strDuration)) {
+            System.out.println(strDuration);
+            if (Pattern.matches("[0-9][0-9]:[0-9][0-9]", strDuration)) {
               String[] splittedText = strDuration.split(":", 0);
-              int minimumDuration = Integer.parseInt(splittedText[0]) * 60 
-                                  + Integer.parseInt(splittedText[1]);
-              placeTableView.setItems(
+              int minimumDuration =   Integer.parseInt(splittedText[0]) * 60 
+                                    + Integer.parseInt(splittedText[1]);
+              pieceTableView.setItems(
                 Controller.getDatabase()
-                  .get
+                  .getPiecesByCountryLongerThan(place.getCountryId(), minimumDuration)
               );
             }
           }

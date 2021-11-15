@@ -119,7 +119,7 @@ CREATE PROCEDURE get_piece_by_country_longer_than(
   IN p_seconds INT
 )
 BEGIN
-  SELECT piece.denomination, piece.duration 
+  SELECT piece.id_piece, piece.denomination, piece.duration 
   FROM piece
   INNER JOIN play_piece 
     ON play_piece.id_piece = piece.id_piece
@@ -135,8 +135,10 @@ BEGIN
     ON address.id_address = takes_place.id_address
   INNER JOIN city
     ON city.id_city = address.id_city
-  -- WHERE piece.duration > p_seconds
-  --   AND city.id_country = p_id_country;
+  INNER JOIN country
+    ON country.country_id = city.id_country
+  WHERE piece.duration > p_seconds
+    AND city.id_country = p_id_country
 ;END $
 
 CREATE PROCEDURE get_meeting_by_band_count(
