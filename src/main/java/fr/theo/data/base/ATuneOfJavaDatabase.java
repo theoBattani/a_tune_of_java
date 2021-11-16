@@ -33,6 +33,30 @@ public class ATuneOfJavaDatabase {
 
   public void closeConnection() {this.connection.close();}
 
+  public ObservableList<Member> getAllMusicians() {
+    ObservableList<Member> output = FXCollections.observableArrayList();
+    ArrayList<String> result = this.connection.callProcedure("get_all_musicians");
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
+      String name = "";
+      String instrument = "";
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id_musician": id = Integer.parseInt(field[1]);
+          case "member": name = field[1]; break;
+          case "denomination": instrument = field[1]; break;
+          default:
+            System.out.println(field[0]);
+            break;
+        }
+      }
+      output.add(new Member(id, name, instrument));
+    }
+    return output;
+  }
+
   public ObservableList<Place> getAllPlaces() {
     ObservableList<Place> output = FXCollections.observableArrayList();
     ArrayList<String> result = this.connection.callProcedure("get_all_places");
@@ -294,5 +318,38 @@ public class ATuneOfJavaDatabase {
     }
     return output;
   }
-  
+
+  public ObservableList<Meeting> getMeetingsByBandCount(int bandCount) {
+    ObservableList<Meeting> output = FXCollections.observableArrayList();
+    ArrayList<String> result = this.connection.callProcedure(
+      "get_meetings_by_band_count",
+      String.format("%d", bandCount)
+    );
+    for (String row: result) {
+      String[] columns = row.split(",", 0);
+      int id = -1;
+      String name = "";
+      int visitors = -1;
+      for (String column: columns) {
+        String[] field = column.split(":", 0);
+        switch (field[0]) {
+          case "id_meeting": id = Integer.parseInt(field[1]);
+          case "label": name = field[1]; break;
+          case "expected_visitors": visitors = Integer.parseInt(field[1]); break;
+          default:
+            break;
+        }
+      }
+      output.add(new Meeting(id, name, visitors));
+    }
+    return output;
+  }
 }
+
+
+
+
+
+
+
+

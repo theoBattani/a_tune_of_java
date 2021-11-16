@@ -1,3 +1,4 @@
+
 package fr.theo.control;
 
 import fr.theo.data.table.Piece;
@@ -16,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.event.ActionEvent;
 
 import java.util.regex.Pattern;
 
@@ -48,6 +50,9 @@ public class ViewController {
     @FXML private TableColumn<Place, String> placeCityColumn;
     @FXML private TableColumn<Place, String> placeCountryColumn;
 
+    @FXML void researchAction(ActionEvent event) {research();}
+    @FXML void refreshAction(ActionEvent event) {refresh();}
+
     @FXML public void initialize() {
       setupColumns();
       setupChoiceBoxes();
@@ -55,13 +60,25 @@ public class ViewController {
       setInitialState();
     }
 
-    private void setupChoiceBoxes() {
-      specialityChoiceBox.getItems().addAll(
-        Controller.getDatabase().getAllSpecialities()
-      );
-      instrumentChoiceBox.getItems().addAll(
-        Controller.getDatabase().getAllInstruments()
-      );
+    private void refresh() {setInitialState();}
+    
+    private void research() {
+      String strBandCount = bandCountTextField.getText();
+      if (Pattern.matches("[0-9]", strBandCount)) {
+        int bandCount = Integer.parseInt(strBandCount);
+        meetingTableView.setItems(
+          Controller.getDatabase()
+            .getMeetingsByBandCount(bandCount)
+        );
+      }
+    }
+
+    private void setInitialState() {
+      pieceTableView.setItems(Controller.getDatabase().getAllPieces());
+      bandTableView.setItems(Controller.getDatabase().getAllBands());
+      meetingTableView.setItems(Controller.getDatabase().getAllMeetings());
+      placeTableView.setItems(Controller.getDatabase().getAllPlaces());
+      memberTableView.setItems(Controller.getDatabase().getAllMusicians());
     }
 
     private void setupEventHandlers() {
@@ -116,7 +133,6 @@ public class ViewController {
           Place place = placeTableView.getSelectionModel().getSelectedItem();
           if (place != null) {
             String strDuration = pieceDurationTextField.getText();
-            System.out.println(strDuration);
             if (Pattern.matches("[0-9][0-9]:[0-9][0-9]", strDuration)) {
               String[] splittedText = strDuration.split(":", 0);
               int minimumDuration = Integer.parseInt(splittedText[0]) * 60 
@@ -131,11 +147,13 @@ public class ViewController {
       });
     }
 
-    private void setInitialState() {
-      pieceTableView.setItems(Controller.getDatabase().getAllPieces());
-      bandTableView.setItems(Controller.getDatabase().getAllBands());
-      meetingTableView.setItems(Controller.getDatabase().getAllMeetings());
-      placeTableView.setItems(Controller.getDatabase().getAllPlaces());
+    private void setupChoiceBoxes() {
+      specialityChoiceBox.getItems().addAll(
+        Controller.getDatabase().getAllSpecialities()
+      );
+      instrumentChoiceBox.getItems().addAll(
+        Controller.getDatabase().getAllInstruments()
+      );
     }
 
     private void setupColumns() {
@@ -173,7 +191,6 @@ public class ViewController {
         new PropertyValueFactory<Place, String>("countryName")
       );
     }
-
 }
 
 

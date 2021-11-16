@@ -26,6 +26,21 @@ BEGIN
     ON person.id_person = band.id_person;
 END $ 
 
+CREATE PROCEDURE get_all_musicians()
+BEGIN
+  SELECT 
+    musician.id_musician,
+    CONCAT_WS(' ', person.firstname, person.lastname) AS member,
+    instrument.denomination
+    FROM musician
+  INNER JOIN person
+    ON person.id_person = musician.id_person
+  INNER JOIN play
+    ON play.id_musician = musician.id_musician
+  INNER JOIN instrument
+    ON instrument.id_instrument = play.id_instrument
+;END$
+
 CREATE PROCEDURE get_all_meetings()
 BEGIN
   SELECT 
@@ -142,7 +157,7 @@ BEGIN
     AND city.id_country = p_id_country
 ;END $
 
-CREATE PROCEDURE get_meeting_by_band_count(
+CREATE PROCEDURE get_meetings_by_band_count(
   IN p_band_count INT
 )
 BEGIN
@@ -152,7 +167,7 @@ BEGIN
     ON during.id_meeting = meeting.id_meeting
   INNER JOIN performance
     ON performance.id_performance = during.id_performance
-  WHERE COUNT(DISTINCT performance.id_band) = p_band_count;
+  HAVING COUNT(DISTINCT performance.id_band) = p_band_count;
 END $ 
 
 CREATE PROCEDURE get_meetings_by_instrument(

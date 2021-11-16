@@ -1,7 +1,6 @@
 
 package fr.theo;
 
-
 import java.io.IOException;
 
 import javafx.application.Application;
