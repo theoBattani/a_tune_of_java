@@ -74,6 +74,8 @@ public class ViewController {
     }
 
     private void setInitialState() {
+      specialityChoiceBox.setValue(null);
+      instrumentChoiceBox.setValue(null);
       pieceTableView.setItems(Controller.getDatabase().getAllPieces());
       bandTableView.setItems(Controller.getDatabase().getAllBands());
       meetingTableView.setItems(Controller.getDatabase().getAllMeetings());
