@@ -7,8 +7,8 @@ import javafx.fxml.FXMLLoader;
 
 public class Loader {
   public static <T> T loadFXML(String file) throws IOException {
-    return (
-      new FXMLLoader(Loader.class.getResource("/fxml/"+ file + ".fxml"))
-    ).load();
+    return (new FXMLLoader(
+      Loader.class.getResource("/fxml/"+ file + ".fxml")
+    )).load();
   }
 }

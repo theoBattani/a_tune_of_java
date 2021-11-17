@@ -10,14 +10,11 @@ import fr.theo.util.fxml.Loader;
 
 public class MainApp extends Application {
 
-  @Override
-  public void start(Stage s) throws IOException {
+  @Override public void start(Stage s) throws IOException {
     ((Stage) Loader.loadFXML("login")).show();
   }
 
-  public static void main(String[] args) {
-      launch(args);
-  }
+  public static void main(String[] args) {launch(args);}
 }
 
 

@@ -137,8 +137,10 @@ public class ViewController {
             String strDuration = pieceDurationTextField.getText();
             if (Pattern.matches("[0-9][0-9]:[0-9][0-9]", strDuration)) {
               String[] splittedText = strDuration.split(":", 0);
-              int minimumDuration = Integer.parseInt(splittedText[0]) * 60 
-                                    + Integer.parseInt(splittedText[1]);
+              int minimumDuration = (
+                  Integer.parseInt(splittedText[0]) * 60 
+                + Integer.parseInt(splittedText[1])
+              );
               pieceTableView.setItems(
                 Controller.getDatabase()
                   .getPiecesByCountryLongerThan(place.getCountryId(), minimumDuration)
