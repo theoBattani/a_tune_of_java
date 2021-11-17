@@ -167,6 +167,7 @@ BEGIN
     ON during.id_meeting = meeting.id_meeting
   INNER JOIN performance
     ON performance.id_performance = during.id_performance
+  GROUP BY meeting.label
   HAVING COUNT(DISTINCT performance.id_band) = p_band_count;
 END $ 
 
